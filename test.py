@@ -23,7 +23,7 @@ def saveResult(save_path,npyfile):
 
 test_path = "./elevs"
 num_img = len(glob.glob(test_path + "/*png"))
-model = load_model("./models/unet_ElevationData_epoch5_stepperepoch1000.hdf5", custom_objects={'tf':tf})
+model = load_model("./models/unet_ElevationData_epoch10_stepperepoch500.hdf5", custom_objects={'tf':tf})
 testGene = testGenerator(test_path, num_image=num_img, target_size=(304,432))
 results = model.predict_generator(testGene, num_img, verbose=1)
 saveResult("./elevs_predict",results)
