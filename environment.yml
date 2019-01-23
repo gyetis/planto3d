@@ -1,7 +1,6 @@
 name: planto3d
 channels:
   - defaults
-  - conda-forge
   - menpo
 dependencies:
   - python==3.6
@@ -10,4 +9,4 @@ dependencies:
   - opencv3
   - pip
   - pip:
-    - solidpython
+    - solidpython flask flask-uploads flask-dropzone

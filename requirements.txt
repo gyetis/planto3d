@@ -1,4 +1,0 @@
-keras
-tensorflow
-solidpython
-opencv3

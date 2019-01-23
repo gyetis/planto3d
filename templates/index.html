@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Planto3D App</title>
+    {{ dropzone.load() }}
+    {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
+</head>
+
+<body>
+    <h1>Welcome to Plan to 3D</h1>
+    <h2>Please rename your files such as:</h2>
+    <h4>Floor Plan: 1.png</h4>
+    <h4>East: 2.png</h4>
+    <h4>West: 3.png</h4>
+    <h4>South: 4.png</h4>
+    <h4>North: 5.png</h4>
+    {{ dropzone.create(action_view='index') }}
+</body>
+
+</html>

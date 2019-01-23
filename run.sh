@@ -1,7 +1,6 @@
 #!/bin/bash
 
-source activate planto3d
-
-python test.py && python regen3d.py
-
-source deactivate planto3d
+source activate planto3d && //
+export FLASK_APP=app.py && //
+flask run && //
+source deactivate planto3d 
