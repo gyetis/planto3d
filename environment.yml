@@ -1,0 +1,13 @@
+name: planto3d
+channels:
+  - defaults
+  - conda-forge
+  - menpo
+dependencies:
+  - python==3.6
+  - keras
+  - scikit-image
+  - opencv3
+  - pip
+  - pip:
+    - solidpython
