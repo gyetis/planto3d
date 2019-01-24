@@ -7,3 +7,4 @@ elevs_predict/3_predict.png
 mesh/out.scad
 plan_predict/1_predict.png
 __pycache__/*
+uploads/*
