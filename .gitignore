@@ -8,3 +8,4 @@ mesh/out.scad
 plan_predict/1_predict.png
 __pycache__/*
 uploads/*
+regen3d.py

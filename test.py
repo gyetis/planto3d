@@ -1,3 +1,5 @@
+## Modified version of https://github.com/zhixuhao/unet/data.py
+
 from keras import backend as K
 from keras.models import load_model
 import tensorflow as tf

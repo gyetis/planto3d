@@ -60,7 +60,7 @@ def return_files():
     except Exception as e:
         return str(e)
 
-@app.route('/file-downloads/')
+@app.route('/file-downloads/ ')
 def file_downloads():  
     # try:   
     #     from test import test
