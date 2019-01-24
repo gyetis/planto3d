@@ -62,10 +62,14 @@ def return_files():
 
 @app.route('/file-downloads/')
 def file_downloads():  
-    try:   
-        from test import test
-        test()
-        import regen3d
-        return render_template('downloads.html')
-    except Exception as e:
-        return str(e)
+    # try:   
+    #     from test import test
+    #     test()
+    #     import regen3d
+    #     return render_template('downloads.html')
+    # except Exception as e:
+    #     return str(e)
+    from test import test
+    test()
+    import regen3d
+    return render_template('downloads.html')

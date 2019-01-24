@@ -6,6 +6,8 @@ import itertools
 import numpy as np
 import heapq
 from euclid3 import *
+import os
+import glob
 from os import listdir
 from subprocess import call
 
@@ -210,6 +212,10 @@ subt = color([1,0,0])(difference()(model, elevations))
 
 scad_render_to_file(mirror([0,1,0])(subt), \
                      "./mesh/out.scad", include_orig_code=False)
+
+files = glob.glob("./uploads/*png")
+for f in files:
+    os.remove(f)
 
 # files = listdir("./mesh/")
 # for f in files:

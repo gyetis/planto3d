@@ -41,22 +41,24 @@ def blend_images(fore, back):
 
 def testGenerator(test_path,num_image,target_size, blank):
     if num_image == 1:
-        img = cv2.imread(test_path+"/1.png", 0)
+        img = cv2.imread(test_path+"/1.png")
         img = resize_proportional(img, target_size)
         img = blend_images(img, blank)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = img / 255
-        img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
+        #img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
         img = np.reshape(img,img.shape+(1,))
         img = np.reshape(img,(1,)+img.shape)
         yield img
 
     else:    
         for i in range(num_image):
-            img = cv2.imread(test_path+"/%d.png"%(i+2), 0)
+            img = cv2.imread(test_path+"/%d.png"%(i+2))
             img = resize_proportional(img, target_size)
             img = blend_images(img, blank)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img = img / 255
-            img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
+            #img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
             img = np.reshape(img,img.shape+(1,))
             img = np.reshape(img,(1,)+img.shape)
             yield img
