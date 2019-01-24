@@ -46,7 +46,6 @@ def testGenerator(test_path,num_image,target_size, blank):
         img = blend_images(img, blank)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = img / 255
-        #img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
         img = np.reshape(img,img.shape+(1,))
         img = np.reshape(img,(1,)+img.shape)
         yield img
@@ -58,7 +57,6 @@ def testGenerator(test_path,num_image,target_size, blank):
             img = blend_images(img, blank)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img = img / 255
-            #img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
             img = np.reshape(img,img.shape+(1,))
             img = np.reshape(img,(1,)+img.shape)
             yield img
