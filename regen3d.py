@@ -9,8 +9,7 @@ from euclid3 import *
 import os
 import glob
 from os import listdir
-from subprocess import call
-
+from subprocess import run
 
 plan = "./plan_predict/1_predict.png"
 north = "./elevs_predict/2_predict.png"
@@ -217,9 +216,17 @@ files = glob.glob("./uploads/*png")
 for f in files:
     os.remove(f)
 
-# files = listdir("./mesh/")
+files = glob.glob("./plan_predict/*png")
+for f in files:
+    os.remove(f)
+
+files = glob.glob("./elevs_predict/*png")
+for f in files:
+    os.remove(f)
+
+# files = listdir("mesh/")
 # for f in files:
 #     if f.find(".scad") >= 0:            # get all .scad files in directory
 #         of = f.replace('.scad', '.stl') # name of the outfile .stl
-#         cmd = 'call (["openscad",  "-o", "{}",  "{}"])'.format(of, f)   #create openscad command
+#         cmd = 'run(["openscad",  "-o", "{}",  "{}"])'.format(of, f)   #create openscad command
 #         exec(cmd)
