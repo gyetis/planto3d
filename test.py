@@ -5,9 +5,6 @@ from skimage import img_as_ubyte
 import numpy as np
 import cv2
 
-blank_image = np.zeros((target + (3,)), np.uint8)
-blank_image[:] = (255,255,255)
-
 def resize_proportional(source_img, target_size, inter = cv2.INTER_CUBIC):
     (source_h, source_w) = source_img.shape[:2]
     (target_h, target_w) = target_size
@@ -42,11 +39,11 @@ def blend_images(fore, back):
     back[0:fore_h,0:fore_w] = blend
     return back
 
-def testGenerator(test_path,num_image,target_size):
+def testGenerator(test_path,num_image,target_size, blank):
     if num_image == 1:
         img = cv2.imread(test_path+"/1.png", 0)
         img = resize_proportional(img, target_size)
-        img = blend_images(img, blank_image)
+        img = blend_images(img, blank)
         img = img / 255
         img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
         img = np.reshape(img,img.shape+(1,))
@@ -57,7 +54,7 @@ def testGenerator(test_path,num_image,target_size):
         for i in range(num_image):
             img = cv2.imread(test_path+"/%d.png"%(i+2), 0)
             img = resize_proportional(img, target_size)
-            img = blend_images(img, blank_image)
+            img = blend_images(img, blank)
             img = img / 255
             img = cv2.resize(img, (0,0), fx=target_size[0]/img.shape[0], fy=target_size[1]/img.shape[1])
             img = np.reshape(img,img.shape+(1,))
@@ -74,14 +71,18 @@ def test():
         test_path = "./uploads"
         num_img = 4
         target = (304,432)
+        blank_image = np.zeros((target + (3,)), np.uint8)
+        blank_image[:] = (255,255,255)
         model = load_model("./models/unet_ElevationData_epoch10_stepperepoch500.hdf5", custom_objects={'tf':tf})
-        testGene = testGenerator(test_path, num_image=num_img, target_size=target)
+        testGene = testGenerator(test_path, num_image=num_img, target_size=target, blank=blank_image)
         results = model.predict_generator(testGene, num_img)
         saveResult("./elevs_predict",results)
 
         num_img = 1
         target = (432,304)
+        blank_image = np.zeros((target + (3,)), np.uint8)
+        blank_image[:] = (255,255,255)
         model = load_model("./models/unet_FloorPlanData_epoch50_stepperepoch500.hdf5", custom_objects={'tf':tf})
-        testGene = testGenerator(test_path, num_image=num_img, target_size=target)
+        testGene = testGenerator(test_path, num_image=num_img, target_size=target, blank=blank_image)
         results = model.predict_generator(testGene, num_img)
         saveResult("./plan_predict",results)
