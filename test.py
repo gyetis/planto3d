@@ -19,12 +19,14 @@ def resize_proportional(source_img, target_size, inter = cv2.INTER_AREA):
             dim = (int(target_w-offset_w), int(source_h * r))
             
         if target_h < target_w and source_h > source_w:
-            rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
+            rot = cv2.getRotationMatrix2D((source_h/2, source_w/2), 90, 1)
+            rot_img = cv2.warpAffine(source_img, rot, (source_h, source_w))
             r = float(target_w-offset_w) / float(rot_img.shape[1])
             dim = (int(target_w-offset_w), int(rot_img.shape[0] * r))
             
         if target_h > target_w and source_h < source_w:
-            rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
+            rot = cv2.getRotationMatrix2D((source_h/2, source_w/2), 90, 1)
+            rot_img = cv2.warpAffine(source_img, rot, (source_h, source_w))
             r = float(target_h-offset_h) / float(rot_img.shape[0])
             dim = (int(rot_img.shape[1] * r), int(target_h-offset_h))
             
