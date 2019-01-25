@@ -56,7 +56,7 @@ def index():
 @app.route('/return-files/')
 def return_files():
     try:
-        return send_file('mesh/out.scad', attachment_filename='planto3d.scad', as_attachment=True)
+        return send_file('mesh/out.stl', attachment_filename='planto3d.stl', as_attachment=True)
     except Exception as e:
         return str(e)
 
