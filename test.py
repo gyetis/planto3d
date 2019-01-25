@@ -7,38 +7,67 @@ from skimage import img_as_ubyte
 import numpy as np
 import cv2
 
-def resize_proportional(source_img, target_size, inter = cv2.INTER_CUBIC):
+def resize_proportional(source_img, target_size, inter = cv2.INTER_AREA):
     (source_h, source_w) = source_img.shape[:2]
     (target_h, target_w) = target_size
+    offset_h = target_h/10
+    offset_w = target_w/10
+    
+    if float(source_w) / float(source_h) > 1.5 or float(source_h) / float(source_w) > 1.5 :
+        if target_h < target_w and source_h < source_w:
+            r = float(target_w-offset_w) / float(source_w)
+            dim = (int(target_w-offset_w), int(source_h * r))
+            
+        if target_h < target_w and source_h > source_w:
+            rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
+            r = float(target_w-offset_w) / float(rot_img.shape[1])
+            dim = (int(target_w-offset_w), int(rot_img.shape[0] * r))
+            
+        if target_h > target_w and source_h < source_w:
+            rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
+            r = float(target_h-offset_h) / float(rot_img.shape[0])
+            dim = (int(rot_img.shape[1] * r), int(target_h-offset_h))
+            
+        if target_h > target_w and source_h > source_w:
+            r = float(target_h-offset_h) / float(source_h)
+            dim = (int(source_w * r), int(target_h-offset_h))
+        
+        resized = cv2.resize(source_img, dim, interpolation = inter)
 
-    if target_h < target_w and source_h < source_w:
-        r = float(target_w) / float(source_w)
-        dim = (target_w, int(source_h * r))
+        return resized
     
-    if target_h < target_w and source_h > source_w:
-        rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
-        r = float(target_w) / float(rot_img.shape[1])
-        dim = (target_w, int(rot_img.shape[0] * r))
-    
-    if target_h > target_w and source_h < source_w:
-        rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
-        r = float(target_h) / float(rot_img.shape[0])
-        dim = (int(rot_img.shape[1] * r), target_h)
-    
-    if target_h > target_w and source_h > source_w:
-        r = float(target_h) / float(source_h)
-        dim = (int(source_w * r), target_h)
-    
-    resized = cv2.resize(source_img, dim, interpolation = inter)
+    else:
+        if target_h < target_w and source_h < source_w:
+            r = float(target_h-offset_h) / float(source_h)
+            dim = (int(source_w * r), int(target_h-offset_h))
+            
+        if target_h < target_w and source_h > source_w:
+            rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
+            r = float(target_h-offset_h) / float(rot_img.shape[0])
+            dim = (int(rot_img.shape[1] * r), int(target_h-offset_h))
+            
+        if target_h > target_w and source_h < source_w:
+            rot_img = cv2.rotate(source_img, rotateCode=cv2.ROTATE_90_CLOCKWISE)
+            r = float(target_w-offset_w) / float(rot_img.shape[1])
+            dim = (int(target_w-offset_w), int(rot_img.shape[0] * r))
+            
+        if target_h > target_w and source_h > source_w:
+            r = float(target_w-offset_w) / float(source_w)
+            dim = ((target_w-offset_w), int(source_h * r))
+        
+        resized = cv2.resize(source_img, dim, interpolation = inter)
 
-    return resized
+        return resized
 
 def blend_images(fore, back):
 
     (fore_h, fore_w) = fore.shape[:2]
+    (back_h, back_w) = back.shape[:2]
+    offset_h = (back_h - fore_h) / 2
+    offset_w = (back_w - fore_w) / 2
 
-    blend = cv2.addWeighted(fore, 1, back[0:fore_h,0:fore_w], 0, 0, back)
-    back[0:fore_h,0:fore_w] = blend
+    blend = cv2.addWeighted(fore, 1, back[int(offset_h):int(offset_h)+fore_h, int(offset_w):int(offset_w)+fore_w], 0, 0, back)
+    back[int(offset_h):int(offset_h)+fore_h, int(offset_w):int(offset_w)+fore_w] = blend
     return back
 
 def testGenerator(test_path,num_image,target_size, blank):
