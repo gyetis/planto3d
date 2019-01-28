@@ -55,7 +55,7 @@ def resize_proportional(source_img, target_size, inter = cv2.INTER_AREA):
             
         if target_h > target_w and source_h > source_w:
             r = float(target_w-offset_w) / float(source_w)
-            dim = ((target_w-offset_w), int(source_h * r))
+            dim = (int(target_w-offset_w), int(source_h * r))
         
         resized = cv2.resize(source_img, dim, interpolation = inter)
 
