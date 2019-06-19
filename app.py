@@ -56,7 +56,7 @@ def index():
 @app.route('/return-files/')
 def return_files():
     try:
-        return send_file('mesh/out.stl', attachment_filename='planto3d.stl', as_attachment=True)
+        return send_file('mesh/out.stl', attachment_filename='3dfy.stl', as_attachment=True)
     except Exception as e:
         return str(e)
 
@@ -71,5 +71,7 @@ def file_downloads():
     #     return str(e)
     from test import test
     test()
-    import regen3d
+    import regen
+    import morph
+    import planto3d
     return render_template('downloads.html')
