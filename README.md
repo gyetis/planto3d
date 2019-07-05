@@ -26,3 +26,6 @@ chmod +x run.sh
 
 ## Usage
 
+## Implementation video
+
+### <video src="./implementation_video/planto3d.mp4" width="320" height="200" controls preload></video>
